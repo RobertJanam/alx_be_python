@@ -5,56 +5,44 @@ def display_menu():
     print("3. View List")
     print("4. Exit")
 
-def display_items(shopping_list):
-    print("All Items")
-    print("-----------")
-    for idx, item in enumerate(shopping_list, start=1):
-        print(f"{idx}. {item}")
-
 def main():
     shopping_list = []
-    
     while True:
         display_menu()
-        choice = input("Enter your choice (by number): ")
+        choice = input("Enter your choice: ")
 
         if choice == '1':
-            # Prompt for and add an item
-            add = input("Add item: ").strip().lower()
-            if add:
-                shopping_list.append(add)
-                print("Item added successfully.")
+            item = input("Enter the item to add: ").strip()
+            if item:
+                shopping_list.append(item)
+                print(f"'{item}' has been added to the shopping list.")
             else:
-                print("No item added.")
+                print("No item entered. Please try again.")
                 
         elif choice == '2':
-            # Prompt for and remove an item
-            if shopping_list:
-                display_items()
+            if not shopping_list:
+                print("The shopping list is empty. Nothing to remove.")
             else:
-                print("Item list is empty.")
-                continue
-            try:
-                remove = int(input("Remove item (by number): "))
-                if remove:
-                    if 1 <= remove <= len(shopping_list):
-                        remove_index = remove - 1
-                        shopping_list.pop(remove_index)
-                        print("Item successfully removed.")
-                    else:
-                        print("Invalid number. Please enter a valid item number.")
+                print("Current shopping list:")
+                for idx, item in enumerate(shopping_list, 1):
+                    print(f"{idx}. {item}")
                 
-            except ValueError:
-                print("Please enter a valid number.")
-
+                item_to_remove = input("Enter the item name to remove: ").strip()
+                if item_to_remove in shopping_list:
+                    shopping_list.remove(item_to_remove)
+                    print(f"'{item_to_remove}' has been removed from the shopping list.")
+                else:
+                    print(f"'{item_to_remove}' was not found in the shopping list.")
+                    
         elif choice == '3':
-            # Display the shopping list
-            if shopping_list:
-                display_items()
+            if not shopping_list:
+                print("The shopping list is empty.")
             else:
-                print("Item list is empty.")
-                continue
-            
+                print("\nCurrent Shopping List:")
+                print("-" * 20)
+                for idx, item in enumerate(shopping_list, 1):
+                    print(f"{idx}. {item}")
+                    
         elif choice == '4':
             print("Goodbye!")
             break
@@ -62,5 +50,4 @@ def main():
             print("Invalid choice. Please try again.")
 
 if __name__ == "__main__":
-    
     main()
